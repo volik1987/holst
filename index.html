@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Холст — редактор интерфейсов</title>
+<meta name="description" content="Холст — бесплатный редактор интерфейсов в браузере: фреймы, авто-раскладка, компоненты, переменные, прототипы и совместная работа.">
+<meta name="theme-color" content="#2c2c2c">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon-192.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,100..900;1,100..900&family=Roboto:ital,wght@0,100..900;1,100..900&family=Montserrat:ital,wght@0,100..900;1,100..900&family=PT+Sans:ital,wght@0,400;0,700;1,400;1,700&family=PT+Serif:ital,wght@0,400;0,700;1,400;1,700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Comfortaa:wght@300..700&family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header id="toolbar"></header>
+<main id="app">
+  <aside id="left" class="panel"></aside>
+  <section id="stage"><canvas id="cv"></canvas></section>
+  <aside id="right" class="panel"></aside>
+</main>
+<div id="toast"></div>
+<noscript>Для работы Холста нужен JavaScript.</noscript>
+<script type="module" src="js/main.js"></script>
+</body>
+</html>
