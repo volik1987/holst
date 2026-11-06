@@ -13,10 +13,11 @@ export function saveFile() {
   toast('Файл сохранён в «Загрузки»');
 }
 export async function openFileDialog() {
-  const [f] = await pickFile('.holst,.json,application/json');
+  const [f] = await pickFile('.holst,.json,.fig,application/json');
   if (f) openFile(f);
 }
 export async function openFile(f) {
+  if (/\.fig$/i.test(f.name)) return (await import('./figma.js')).importFigFile(f);
   try {
     const o = JSON.parse(await readAs(f, 'text'));
     if (!o.nodes?.root) throw new Error('не похоже на файл Холста');
@@ -26,7 +27,7 @@ export async function openFile(f) {
 }
 
 /* ---------- картинки ---------- */
-async function shrink(dataUrl) {
+export async function shrinkImage(dataUrl) {
   if (dataUrl.length < 1.6e6 || /^data:image\/(svg|gif)/.test(dataUrl)) return dataUrl;
   const im = await loadImg(dataUrl);
   const s = Math.min(1, 2400 / Math.max(im.naturalWidth, im.naturalHeight));
@@ -37,7 +38,7 @@ async function shrink(dataUrl) {
 }
 const loadImg = src => new Promise((res, rej) => { const i = new Image(); i.onload = () => res(i); i.onerror = rej; i.src = src; });
 export async function addImage(dataUrl) {
-  dataUrl = await shrink(dataUrl);
+  dataUrl = await shrinkImage(dataUrl);
   const id = 'img' + M.uid();
   A.doc.images[id] = dataUrl;
   const im = await loadImg(dataUrl);
@@ -53,7 +54,7 @@ export async function insertImageFiles(files, at) {
   let c = at || viewCenter();
   for (const f of files) {
     if (/svg/.test(f.type) || /\.svg$/i.test(f.name)) { const ids = importSVGText(await readAs(f, 'text'), c); out.push(...ids); c = { x: c.x + 20, y: c.y + 20 }; continue; }
-    if (/json|holst/.test(f.type) || /\.holst$/i.test(f.name)) { openFile(f); return; }
+    if (/json|holst/.test(f.type) || /\.(holst|fig)$/i.test(f.name)) { openFile(f); return; }
     if (!/^image\//.test(f.type)) continue;
     const img = await addImage(await readAs(f));
     let w = img.w, h = img.h; const s = Math.min(1, 800 / Math.max(w, h)); w = Math.round(w * s); h = Math.round(h * s);

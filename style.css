@@ -214,3 +214,12 @@ kbd { font: 11px "JetBrains Mono", monospace; background: var(--bg2); border: 1p
   .tb-mid { display: none; }
   .tbtn.share { padding: 0 8px; }
 }
+
+/* импорт из Figma */
+.figma-imp .imp-way { padding: 12px 0; border-bottom: 1px solid var(--line, #e5e5e5); }
+.figma-imp .imp-way:last-child { border-bottom: 0; }
+.figma-imp .imp-way p { margin: 4px 0 8px; }
+.figma-imp label.mini { display: block; margin-bottom: 8px; }
+.figma-imp label.mini.row { display: flex; flex-direction: row; align-items: center; justify-content: flex-start; gap: 6px; }
+.figma-imp label.mini.row input { width: auto; flex: none; margin: 0; }
+.figma-imp .inp { width: 100%; box-sizing: border-box; }

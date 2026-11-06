@@ -128,6 +128,7 @@ A.on('contextmenu', ({ x, y }) => {
     '-',
     { label: 'Вставить картинку…', do: IO.insertImageDialog },
     { label: 'Импорт SVG…', do: IO.importSVGDialog },
+    { label: 'Импорт из Figma…', do: () => import('./figma.js').then(m => m.figmaDialog()) },
   ]);
 });
 async function copyPNG() {
@@ -228,6 +229,8 @@ document.addEventListener('paste', e => {
   if (isTyping() || A.present) return;
   e.preventDefault();
   const dt = e.clipboardData;
+  const html = dt?.getData('text/html') || '';
+  if (/\(figma\)/.test(html)) { import('./figma.js').then(m => m.importFigClipboard(html)); return; }
   const files = [...(dt?.files || [])];
   if (files.length) { IO.insertImageFiles(files); return; }
   const t = dt?.getData('text/plain') || '';
@@ -265,7 +268,8 @@ async function filesDialog() {
     h('div', { class: 'row' },
       h('button', { class: 'btn', onclick: () => { m.close(); newFile(); } }, '+ Новый файл'),
       h('button', { class: 'btn ghost', onclick: () => { m.close(); IO.openFileDialog(); } }, 'Открыть с диска…'),
-      h('button', { class: 'btn ghost', onclick: () => { m.close(); openDemo(); } }, 'Демо-файл')),
+      h('button', { class: 'btn ghost', onclick: () => { m.close(); openDemo(); } }, 'Демо-файл'),
+      h('button', { class: 'btn ghost', onclick: () => { m.close(); import('./figma.js').then(x => x.figmaDialog()); } }, 'Из Figma…')),
     h('p', { class: 'muted small' }, 'Файлы хранятся в этом браузере и сохраняются автоматически. Чтобы перенести на другой компьютер — «Сохранить в файл .holst».'),
     grid), { cls: 'wide' });
   for (const d of list) {

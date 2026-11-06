@@ -1,7 +1,8 @@
 // Сначала сеть (обновления приходят сразу), без сети — из кэша: редактор работает офлайн.
-const V = 'holst-v1';
+const V = 'holst-v2';
 const FILES = ['./', 'index.html', 'style.css', 'manifest.webmanifest', 'icon-192.png', 'icon-512.png',
-  'js/main.js', 'js/app.js', 'js/model.js', 'js/geom.js', 'js/render.js', 'js/canvas.js', 'js/ui.js', 'js/dom.js', 'js/io.js', 'js/proto.js', 'js/collab.js', 'js/store.js', 'js/demo.js'];
+  'js/main.js', 'js/app.js', 'js/model.js', 'js/geom.js', 'js/render.js', 'js/canvas.js', 'js/ui.js', 'js/dom.js', 'js/io.js', 'js/proto.js', 'js/collab.js', 'js/store.js', 'js/demo.js',
+  'js/figma.js', 'js/figma-conv.js', 'vendor/kiwi.js', 'vendor/fflate.js', 'vendor/fzstd.js'];
 self.addEventListener('install', e => { e.waitUntil(caches.open(V).then(c => c.addAll(FILES)).catch(() => { })); self.skipWaiting(); });
 self.addEventListener('activate', e => { e.waitUntil(caches.keys().then(ks => Promise.all(ks.filter(k => k !== V).map(k => caches.delete(k)))).then(() => self.clients.claim())); });
 self.addEventListener('fetch', e => {

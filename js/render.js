@@ -187,6 +187,7 @@ function drawBool(ctx, doc, n, env) {
   const cv = ctx.canvas, d = env.depth || 0;
   let off = offPool[d];
   if (!off) off = offPool[d] = document.createElement('canvas');
+  if (!cv.width || !cv.height) return;
   if (off.width !== cv.width || off.height !== cv.height) { off.width = cv.width; off.height = cv.height; }
   const o = off.getContext('2d');
   o.setTransform(1, 0, 0, 1, 0, 0); o.clearRect(0, 0, off.width, off.height);

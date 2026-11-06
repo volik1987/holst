@@ -58,11 +58,12 @@ function mainMenu(el) {
     { label: 'Мои файлы…', do: () => A.emit('files') },
     { label: 'Новый файл', key: '⌥N', do: () => A.emit('newfile') },
     '-',
-    { label: 'Открыть файл .holst…', key: '⌘O', do: IO.openFileDialog },
+    { label: 'Открыть файл .holst / .fig…', key: '⌘O', do: IO.openFileDialog },
     { label: 'Сохранить в файл .holst', key: '⌘S', do: IO.saveFile },
     '-',
     { label: 'Вставить картинку…', key: '⇧⌘K', do: IO.insertImageDialog },
     { label: 'Импорт SVG…', do: IO.importSVGDialog },
+    { label: 'Импорт из Figma…', do: () => import('./figma.js').then(m => m.figmaDialog()) },
     '-',
     { label: 'Экспорт выделения', sub: [
       { label: 'PNG 1×', do: () => IO.exportSel('png', 1) }, { label: 'PNG 2×', do: () => IO.exportSel('png', 2) },
